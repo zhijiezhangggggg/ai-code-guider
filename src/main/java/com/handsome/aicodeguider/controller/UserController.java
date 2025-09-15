@@ -1,5 +1,10 @@
 package com.handsome.aicodeguider.controller;
 
+import com.handsome.aicodeguider.common.BaseResponse;
+import com.handsome.aicodeguider.common.ResultUtils;
+import com.handsome.aicodeguider.exception.ErrorCode;
+import com.handsome.aicodeguider.exception.ThrowUtils;
+import com.handsome.aicodeguider.model.dto.user.UserRegisterRequest;
 import com.handsome.aicodeguider.model.entity.User;
 import com.mybatisflex.core.paginate.Page;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,10 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.handsome.aicodeguider.service.UserService;
 import org.springframework.web.bind.annotation.RestController;
+
 import java.util.List;
 
 /**
- * 用户 控制层。
+ * 用户控制层
  *
  * @author <a href="https://github.com/zhijiezhangggggg/ai-code-guider">handsomejack</a>
  */
@@ -91,4 +97,13 @@ public class UserController {
         return userService.page(page);
     }
 
+    @PostMapping("register")
+    public BaseResponse<Long> userRegister(@RequestBody UserRegisterRequest userRegisterRequest) {
+        ThrowUtils.throwIf(userRegisterRequest == null, ErrorCode.PARAMS_ERROR);
+        String userAccount = userRegisterRequest.getUserAccount();
+        String userPassword = userRegisterRequest.getUserPassword();
+        String checkPassword = userRegisterRequest.getCheckPassword();
+        long result = userService.userRegister(userAccount, userPassword, checkPassword);
+        return ResultUtils.success(result);
+    }
 }
