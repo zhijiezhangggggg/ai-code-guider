@@ -1,7 +1,8 @@
 package com.handsome.aicodeguider.mapper;
 
+import com.handsome.aicodeguider.model.entity.User;
 import com.mybatisflex.core.BaseMapper;
-import com.handsome.aicodeguider.genresult.entity.User;
+
 
 /**
  * 用户 映射层。
